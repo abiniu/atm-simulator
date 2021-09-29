@@ -36,6 +36,8 @@ public class AtmService {
 			adjustAtmNotes(atm, calculatedSplit);
 			accountService.save(accountForWithdraw);
 			atmRepository.save(atm);
+			calculatedSplit.setRemainingBalance(accountForWithdraw.getBalance());
+			calculatedSplit.setRemainingOverdraftBalance(accountForWithdraw.getOverdraft());
 		} else {
 			log.error(
 					"ATM does not have enought notes for windrawal, requested account number: {}, requested ammount: {}",
