@@ -13,6 +13,8 @@ import lombok.Setter;
 @Setter
 public class ATM {
 	
+	public static final String VIRTUAL_ATM_SERIAL = "VIRTUAL_ATM_SERIAL";
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -21,6 +23,8 @@ public class ATM {
 	private int _20Note;
 	private int _10Note;
 	private int _5Note;
+	
+	private String serialNumber;
 	
 	@Version
 	private Long version;

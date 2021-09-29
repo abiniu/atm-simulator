@@ -1,7 +1,10 @@
 package com.sample.bank.atm.service;
 
+import org.springframework.stereotype.Service;
+
 import com.sample.bank.atm.domain.Withdrawal;
 
+@Service
 public class WithdrawalCalculator {
 
 	public Withdrawal calculateSplit(int _50Note, int _20Note, int _10Note, int _5Note, Long ammomunt) {

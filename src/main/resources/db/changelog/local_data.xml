@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+	<changeSet author="adamb" id="1632943403250-2" context="faker">
+		<insert tableName="ATM">
+			<column name="id" valueNumeric="1" />
+			<column name="_50NOTE" valueNumeric="10" />
+			<column name="_20NOTE" valueNumeric="30" />
+			<column name="_10NOTE" valueNumeric="30" />
+			<column name="_5NOTE" valueNumeric="20" />
+			<column name="SERIAL_NUMBER" value="VIRTUAL_ATM_SERIAL" />
+			<column name="VERSION" valueNumeric="0" />
+		</insert>
+		<insert tableName="BANK_ACCOUNT">
+			<column name="id" valueNumeric="1" />
+			<column name="number" value="123456789" />
+			<column name="pin" value="1234" />
+			<column name="balance" valueNumeric="800" />
+			<column name="overdraft" valueNumeric="200" />
+			<column name="VERSION" valueNumeric="0" />
+		</insert>
+		<insert tableName="BANK_ACCOUNT">
+			<column name="id" valueNumeric="2" />
+			<column name="number" value="987654321" />
+			<column name="pin" value="4321" />
+			<column name="balance" valueNumeric="1230" />
+			<column name="overdraft" valueNumeric="150" />
+			<column name="VERSION" valueNumeric="0" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>

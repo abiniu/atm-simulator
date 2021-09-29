@@ -33,4 +33,12 @@ public class BankAccount {
 	@Version
 	private Long version;
 	
+	public BigDecimal getTotalBalance() {
+		return  balance.add(overdraft);
+	}
+	
+	public boolean hasFunds(BigDecimal funds) {
+		return balance.subtract(funds).add(overdraft).compareTo(BigDecimal.ZERO) >= 0;
+	}
+	
 }

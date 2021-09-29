@@ -1,0 +1,40 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="adamb (generated)" id="1632943403250-1">
+        <createSequence sequenceName="HIBERNATE_SEQUENCE" startValue="100"/>
+    </changeSet>
+    <changeSet author="adamb (generated)" id="1632943403250-2">
+        <createTable tableName="ATM">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="CONSTRAINT_F"/>
+            </column>
+            <column name="_10NOTE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="_20NOTE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="_50NOTE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="_5NOTE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SERIAL_NUMBER" type="VARCHAR(255)"/>
+            <column name="VERSION" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="adamb (generated)" id="1632943403250-3">
+        <createTable tableName="BANK_ACCOUNT">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="CONSTRAINT_1"/>
+            </column>
+            <column name="BALANCE" type="DECIMAL(10, 2)"/>
+            <column name="NUMBER" type="VARCHAR(255)"/>
+            <column name="OVERDRAFT" type="DECIMAL(10, 2)"/>
+            <column name="PIN" type="VARCHAR(255)"/>
+            <column name="VERSION" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <include file="db/changelog/local_data.xml"/>
+</databaseChangeLog>
