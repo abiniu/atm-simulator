@@ -32,17 +32,10 @@ public class AtmService {
 		Withdrawal calculatedSplit = withdrawalCalculator.calculateSplit(atm.get_50Note(), atm.get_20Note(),
 				atm.get_10Note(), atm.get_5Note(), ammount);
 		if (calculatedSplit != null) {
-
-			BigDecimal newBallance = accountForWithdraw.getBalance().subtract(BigDecimal.valueOf(ammount));
-			if (newBallance.compareTo(BigDecimal.ZERO) < 0) {
-				accountForWithdraw.setBalance(BigDecimal.ZERO);
-				accountForWithdraw.setOverdraft(accountForWithdraw.getOverdraft().add(newBallance));
-			} else {
-				accountForWithdraw.setBalance(newBallance);
-			}
+			adjustAccount(ammount, accountForWithdraw);
+			adjustAtmNotes(atm, calculatedSplit);
 			accountService.save(accountForWithdraw);
 			atmRepository.save(atm);
-
 		} else {
 			log.error(
 					"ATM does not have enought notes for windrawal, requested account number: {}, requested ammount: {}",
@@ -51,5 +44,22 @@ public class AtmService {
 					"ATM does not have enought notes for windrawal");
 		}
 		return calculatedSplit;
+	}
+
+	protected void adjustAccount(long ammount, BankAccount accountForWithdraw) {
+		BigDecimal newBallance = accountForWithdraw.getBalance().subtract(BigDecimal.valueOf(ammount));
+		if (newBallance.compareTo(BigDecimal.ZERO) < 0) {
+			accountForWithdraw.setBalance(BigDecimal.ZERO);
+			accountForWithdraw.setOverdraft(accountForWithdraw.getOverdraft().add(newBallance));
+		} else {
+			accountForWithdraw.setBalance(newBallance);
+		}
+	}
+
+	protected void adjustAtmNotes(ATM atm, Withdrawal calculatedSplit) {
+		atm.set_50Note(atm.get_50Note() - calculatedSplit.get_50Note());
+		atm.set_20Note(atm.get_20Note() - calculatedSplit.get_20Note());
+		atm.set_10Note(atm.get_10Note() - calculatedSplit.get_10Note());
+		atm.set_5Note(atm.get_5Note() - calculatedSplit.get_5Note());
 	}
 }

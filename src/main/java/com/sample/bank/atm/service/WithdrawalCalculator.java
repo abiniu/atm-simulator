@@ -16,6 +16,11 @@ public class WithdrawalCalculator {
 			return withdrawal;
 		}
 		
+		if (_50Note * 50 + _20Note * 20 + _10Note * 10 + _5Note * 5 < ammomunt) {
+			// no point of searching if not enough money
+			return null;
+		}
+		
 		Withdrawal newWithdrawal = withdrawal.toBuilder().build();
 		
 		if (ammomunt >= 50 && _50Note > 0) {
