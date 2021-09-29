@@ -2,10 +2,10 @@ package com.sample.bank.atm.service;
 
 import java.math.BigDecimal;
 
-import javax.transaction.Transactional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.sample.bank.atm.domain.BankAccount;
@@ -47,8 +47,10 @@ public class AccountService {
 
 	private void validateAccount(String accountNumber, Object bankAccount) {
 		if (bankAccount == null && accountRepository.getAccountByNumber(accountNumber) != null) {
+			log.warn("Invalid PIN number for account: {}", accountNumber);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The provided PIN is invalid");
 		} else if (bankAccount == null) {
+			log.warn("Account: {} not found", accountNumber);
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
 		}
 	}

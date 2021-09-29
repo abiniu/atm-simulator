@@ -2,10 +2,12 @@ package com.sample.bank.atm.service;
 
 import java.math.BigDecimal;
 
-import javax.transaction.Transactional;
+import javax.persistence.OptimisticLockException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.sample.bank.atm.domain.ATM;
@@ -26,6 +28,7 @@ public class AtmService {
 	private final AccountService accountService;
 
 	@Transactional
+	@Retryable(OptimisticLockException.class)
 	public Withdrawal withdraw(String accountNumber, String pin, long ammount) {
 		BankAccount accountForWithdraw = accountService.getAccountForWithdraw(accountNumber, pin, ammount);
 		ATM atm = atmRepository.getATMBySerialNumber();
@@ -51,6 +54,7 @@ public class AtmService {
 	protected void adjustAccount(long ammount, BankAccount accountForWithdraw) {
 		BigDecimal newBallance = accountForWithdraw.getBalance().subtract(BigDecimal.valueOf(ammount));
 		if (newBallance.compareTo(BigDecimal.ZERO) < 0) {
+			log.info("Ballance for account: {} is empty, using overdraft", accountForWithdraw.getNumber());
 			accountForWithdraw.setBalance(BigDecimal.ZERO);
 			accountForWithdraw.setOverdraft(accountForWithdraw.getOverdraft().add(newBallance));
 		} else {

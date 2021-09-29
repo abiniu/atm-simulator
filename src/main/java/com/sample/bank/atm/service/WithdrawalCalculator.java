@@ -4,7 +4,10 @@ import org.springframework.stereotype.Service;
 
 import com.sample.bank.atm.domain.Withdrawal;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class WithdrawalCalculator {
 
 	public Withdrawal calculateSplit(int _50Note, int _20Note, int _10Note, int _5Note, Long ammomunt) {
@@ -13,11 +16,12 @@ public class WithdrawalCalculator {
 	
 	private Withdrawal calculateSplit(Withdrawal withdrawal, int _50Note, int _20Note, int _10Note, int _5Note, Long ammomunt) {
 		if(ammomunt == 0l ) {
+			log.debug("Found the notes split: {}", withdrawal);
 			return withdrawal;
 		}
 		
 		if (_50Note * 50 + _20Note * 20 + _10Note * 10 + _5Note * 5 < ammomunt) {
-			// no point of searching if not enough money
+			log.trace("no point of searching, not enough money for this search path");
 			return null;
 		}
 		
